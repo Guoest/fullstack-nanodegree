@@ -3,6 +3,12 @@ import psycopg2
 
 
 def top_three_article():
+"""Extract top three most viewed articles.
+
+Returns:
+    the list of top three most viewed articles.
+
+"""
     db = psycopg2.connect("dbname=news")
     c = db.cursor()
     c.execute("""select title, count(*) as num
@@ -14,6 +20,12 @@ def top_three_article():
 
 
 def top_authors():
+"""Extrac most viewed authors by view count.
+
+Returns:
+    list of authors and their views.
+
+"""
     db = psycopg2.connect("dbname=news")
     c = db.cursor()
     c.execute("""select name, author, count(*) as num
@@ -26,6 +38,12 @@ def top_authors():
 
 
 def error_rate():
+"""Extract error rate per day.
+
+Returns:
+    list of error rates by date.
+
+"""
     db = psycopg2.connect("dbname=news")
     c = db.cursor()
     c.execute("""select 100*cast(err_count as float)/cast(total_count as float)
@@ -42,6 +60,9 @@ def error_rate():
 
 
 def main():
+"""Query the DB and return most popular articles, authors and error rates.
+
+"""
     top_three = top_three_article()
     print "Most popular three articles of all time:"
     for title, views in top_three:
